@@ -6,3 +6,4 @@
 ## Checklist
 
 - [x] initial setup done!
+- [x] tailwindcss configuration done!
