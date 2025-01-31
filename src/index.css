@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display-1: "Open Sans";
+  --font-display-2: "Smooch Sans";
+  --font-display-3: "Poppins";
+  --font-display-4: "Montserrat";
+}
