@@ -9,10 +9,12 @@ import {
 } from "../redux/features/auth/loginSlice";
 import authServices from "../services/authServices";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
+  const [reqMsg, setReqMsg] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,20 +22,24 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    toast.success("Logging in...");
-    try {
-      const response = await authServices.login({ email, password });
-      if (response.status === 200) {
-        toast.success("Logged in successfully");
-        dispatch(setEmail(""));
-        dispatch(setPassword(""));
-        setTimeout(() => {
-          revalidate();
-          navigate("/dashboard", { replace: true });
-        }, 1000);
+    if (email && password) {
+      toast.success("Logging in...");
+      try {
+        const response = await authServices.login({ email, password });
+        if (response.status === 200) {
+          toast.success("Logged in successfully");
+          dispatch(setEmail(""));
+          dispatch(setPassword(""));
+          setTimeout(() => {
+            revalidate();
+            navigate("/dashboard", { replace: true });
+          }, 1000);
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
       }
-    } catch (error) {
-      toast.error(error.response.data.message);
+    } else {
+      setReqMsg(true);
     }
   };
   return (
@@ -43,8 +49,10 @@ const Login = () => {
         onSubmit={handleLogin}
         className="w-full flex flex-col gap-8 md:w-1/2 xl:w-[40%]"
       >
-        <div className="flex flex-col gap-1">
-          <label htmlFor="email">Email</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="email">
+            Email<sup>*</sup>
+          </label>
           <input
             type="email"
             name="email"
@@ -52,11 +60,27 @@ const Login = () => {
             placeholder="Enter your email address"
             value={email}
             onChange={(e) => dispatch(setEmail(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="password">Password</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="password">
+            Password<sup>*</sup>
+          </label>
           <input
             type="password"
             name="password"
@@ -64,8 +88,22 @@ const Login = () => {
             placeholder="Enter a secure password"
             value={password}
             onChange={(e) => dispatch(setPassword(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
         <button
           type="submit"

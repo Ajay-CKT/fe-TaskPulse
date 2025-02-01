@@ -12,36 +12,43 @@ import { selectPriority } from "../redux/features/tasks/createTaskSlice";
 import { useNavigate } from "react-router-dom";
 import userServices from "../services/userServices";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const CreateTask = () => {
   const title = useSelector(selectTitle);
   const description = useSelector(selectDescription);
   const deadline = useSelector(selectDeadline);
   const priority = useSelector(selectPriority);
+  const [reqMsg, setReqMsg] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCreateTask = async (e) => {
     e.preventDefault();
-    try {
-      const response = await userServices.createTask({
-        title,
-        description,
-        deadline,
-        priority,
-      });
-      if (response.status === 201) {
-        toast.success("Task created successfully");
-        dispatch(setTitle(""));
-        dispatch(setDescription(""));
-        dispatch(setDeadline(""));
-        dispatch(setPriority(""));
-        setTimeout(() => {
-          navigate("/tasks", { replace: true });
-        }, 500);
+    if (title && description && deadline && priority) {
+      try {
+        const response = await userServices.createTask({
+          title,
+          description,
+          deadline,
+          priority,
+        });
+        if (response.status === 201) {
+          toast.success("Task created successfully");
+          dispatch(setTitle(""));
+          dispatch(setDescription(""));
+          dispatch(setDeadline(""));
+          dispatch(setPriority(""));
+          setTimeout(() => {
+            navigate("/tasks", { replace: true });
+          }, 500);
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
       }
-    } catch (error) {
-      toast.error(error.response.data.message);
+    } else {
+      setReqMsg(true);
     }
   };
   return (
@@ -51,8 +58,10 @@ const CreateTask = () => {
         onSubmit={handleCreateTask}
         className="w-full flex flex-col gap-8 md:w-1/2 xl:w-[40%]"
       >
-        <div className="flex flex-col gap-1">
-          <label htmlFor="name">Title</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="name">
+            Title<sup>*</sup>
+          </label>
           <input
             type="text"
             name="title"
@@ -60,11 +69,27 @@ const CreateTask = () => {
             placeholder="Give title name..."
             value={title}
             onChange={(e) => dispatch(setTitle(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="email">Description</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="email">
+            Description<sup>*</sup>
+          </label>
           <input
             type="text"
             name="description"
@@ -72,11 +97,27 @@ const CreateTask = () => {
             placeholder="Describe the task..."
             value={description}
             onChange={(e) => dispatch(setDescription(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="password">Deadline</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="password">
+            Deadline<sup>*</sup>
+          </label>
           <input
             type="datetime-local"
             name="deadline"
@@ -85,23 +126,53 @@ const CreateTask = () => {
             min={new Date().toISOString()}
             value={deadline}
             onChange={(e) => dispatch(setDeadline(e.target.value))}
-            className="outline-none border rounded-lg p-3 placeholdr:font-display-4 text-xs w-full"
+            className={`outline-none border rounded-lg p-3 placeholdr:font-display-4 text-xs w-full ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-[-1.5rem] bottom-2.5 size-5"
+            />
+          )}
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="password">Priority</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="password">
+            Priority<sup>*</sup>
+          </label>
           <select
             name="priority"
             id="priority"
             value={priority}
             onChange={(e) => dispatch(setPriority(e.target.value))}
-            className="outline-none border rounded-lg p-3 font-display-4 text-xs"
+            className={`outline-none border rounded-lg p-3 font-display-4 text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           >
             <option value="medium">Set priority level</option>
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
           </select>
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
         <button
           type="submit"

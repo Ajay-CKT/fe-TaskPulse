@@ -10,32 +10,38 @@ import {
   setPassword,
 } from "../redux/features/auth/registerSlice";
 import authServices from "../services/authServices";
+import { useState } from "react";
 
 const Register = () => {
   const name = useSelector(selectName);
   const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
+  const [reqMsg, setReqMsg] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    toast.success("Registering...");
-    try {
-      const response = await authServices.register({ name, email, password });
-      if (response.status === 201) {
-        toast.success("Registered successfully");
-        dispatch(setName(""));
-        dispatch(setEmail(""));
-        dispatch(setPassword(""));
+    if (name && email && password) {
+      toast.success("Registering...");
+      try {
+        const response = await authServices.register({ name, email, password });
+        if (response.status === 201) {
+          toast.success("Registered successfully");
+          dispatch(setName(""));
+          dispatch(setEmail(""));
+          dispatch(setPassword(""));
 
-        setTimeout(() => {
-          navigate("/login");
-        }, 500);
+          setTimeout(() => {
+            navigate("/login", { replace: true });
+          }, 500);
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
       }
-    } catch (error) {
-      toast.error(error.response.data.message);
+    } else {
+      setReqMsg(true);
     }
   };
   return (
@@ -45,8 +51,10 @@ const Register = () => {
         onSubmit={handleRegister}
         className="w-full flex flex-col gap-8 md:w-1/2 xl:w-[40%]"
       >
-        <div className="flex flex-col gap-1">
-          <label htmlFor="name">Name</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="name">
+            Name<sup>*</sup>
+          </label>
           <input
             type="text"
             name="name"
@@ -54,11 +62,27 @@ const Register = () => {
             placeholder="Enter your name"
             value={name}
             onChange={(e) => dispatch(setName(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="email">Email</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="email">
+            Email<sup>*</sup>
+          </label>
           <input
             type="email"
             name="email"
@@ -66,11 +90,27 @@ const Register = () => {
             placeholder="Enter your email address"
             value={email}
             onChange={(e) => dispatch(setEmail(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="password">Password</label>
+        <div className="flex flex-col gap-1 relative">
+          <label htmlFor="password">
+            Password<sup>*</sup>
+          </label>
           <input
             type="password"
             name="password"
@@ -78,8 +118,22 @@ const Register = () => {
             placeholder="Enter a secure password"
             value={password}
             onChange={(e) => dispatch(setPassword(e.target.value))}
-            className="outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+            className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
+              reqMsg && "border-red-500"
+            }`}
           />
+          {reqMsg && (
+            <p className="text-xs font-display-4 text-red-500 absolute bottom-[-1rem]">
+              Required field cannot be empty
+            </p>
+          )}
+          {reqMsg && (
+            <img
+              src="/icons/error.png"
+              alt=""
+              className="absolute right-4 bottom-2.5 size-5"
+            />
+          )}
         </div>
         <button
           type="submit"

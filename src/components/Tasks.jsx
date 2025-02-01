@@ -123,11 +123,11 @@ const TaskColumn = ({
   priorityFilter,
   setPriorityFilter,
 }) => (
-  <div className="p-4 mb-20 rounded-lg shadow-md">
+  <div className="p-4 mb-20 rounded-md shadow-md">
     <div className="flex justify-between items-center mb-2">
       <h2 className={`text-${color}-500 font-bold`}>{title}</h2>
       <select
-        className="p-2 rounded-xl border-b border-b-orange-400 text-sm"
+        className="p-2 rounded-md border-b border-b-orange-400 text-sm"
         value={priorityFilter[status]}
         onChange={(e) =>
           setPriorityFilter({ ...priorityFilter, [status]: e.target.value })
@@ -143,12 +143,14 @@ const TaskColumn = ({
     </div>
     {tasks.length > 0 ? (
       tasks.map((task) => (
-        <div key={task._id} className="p-2 rounded mb-2 shadow-md">
+        <div key={task._id} className="p-2 rounded-md mb-2">
           <Task task={task} />
         </div>
       ))
     ) : (
-      <p className="text-gray-400">No tasks available</p>
+      <p className="text-gray-400 font-display-4 test-sm text-center">
+        No tasks available
+      </p>
     )}
   </div>
 );

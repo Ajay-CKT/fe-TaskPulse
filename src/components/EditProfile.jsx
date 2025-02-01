@@ -26,7 +26,7 @@ const EditProfile = () => {
   };
   return (
     <div className="p-4 flex flex-col gap-12 md:flex md:flex-col md:justify-center md:items-center md:mx-auto">
-      <h1 className="text-2xl text-center font-display-3">Update Name</h1>
+      <h1 className="text-2xl text-center font-display-3">Update Profile!</h1>
       <form
         onSubmit={handleEdit}
         className="w-full flex flex-col gap-8 md:w-1/2 xl:w-[40%]"
