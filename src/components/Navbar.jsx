@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="h-20 px-2 md:px-4 shadow-md rounded-b-2xl flex flex-row justify-between items-center relative">
+      <nav className="h-20 px-2 md:px-4 shadow-md rounded-b-xl flex flex-row justify-between items-center relative z-200">
         <Link to="/" onClick={() => setShowMenu(false)}>
           <div className="h-12 md:h-18 z-50">
             <img
@@ -37,16 +37,16 @@ const Navbar = () => {
             />
           </div>
         </Link>
-        <div className="flex flex-row justify-center items-center gap-2 h-10">
+        <div className="flex flex-row justify-center items-center gap-2 h-10 font-display-3 text-sm">
           {!user && (
             <div className="hidden md:flex md:flex-row md:items-center md:gap-4">
               <Link to="/register">
-                <button className="p-2 w-26 text-center rounded-lg hover:border-b hover:border-b-orange-500 hover:cursor-pointer hover:shadow-md">
+                <button className="p-2 w-26 text-center rounded-md hover:border-b hover:border-b-orange-500 hover:cursor-pointer hover:shadow-md">
                   Get Started
                 </button>
               </Link>
               <Link to="/login">
-                <button className="p-2 w-20 text-center bg-orange-400 rounded-lg hover:bg-orange-500 hover:cursor-pointer hover:shadow-lg">
+                <button className="p-2 w-20 text-center bg-orange-400 rounded-md hover:bg-orange-500 hover:cursor-pointer hover:shadow-lg">
                   Login
                 </button>
               </Link>
@@ -57,14 +57,14 @@ const Navbar = () => {
               <Link to="/logout">
                 <button
                   onClick={() => navigate("/logout", { replace: true })}
-                  className="p-2 w-26 text-center rounded-lg bg-orange-400 hover:bg-orange-500 hover:cursor-pointer hover:shadow-md"
+                  className="p-2 w-26 text-center rounded-md bg-orange-400 hover:bg-orange-500 hover:cursor-pointer hover:shadow-md"
                 >
                   Logout
                 </button>
               </Link>
             </div>
           )}
-          <div className="p-2 size-10 rounded-lg hover:cursor-pointer md:hidden">
+          <div className="p-2 size-10 rounded-md hover:cursor-pointer md:hidden">
             <button onClick={handleMenu}>
               <img src="/icons/menu.png" alt="" className="size-full" />
             </button>
@@ -75,7 +75,7 @@ const Navbar = () => {
         </div>
       </nav>
       {showMenu && !user && (
-        <div className="h-screen w-full pt-10 pl-10 text-xl flex flex-col items-start gap-8 bg-orange-400 absolute top-18 font-display-3">
+        <div className="h-screen w-full pt-10 pl-10 text-xl flex flex-col items-start gap-8 bg-orange-400 absolute top-18 font-display-3 z-200">
           <Link
             to="/register"
             onClick={() => setShowMenu(false)}
@@ -100,7 +100,7 @@ const Navbar = () => {
         </div>
       )}
       {showMenu && user && (
-        <div className="h-screen w-full pt-10 pl-10 text-xl flex flex-col items-start gap-8 bg-orange-400 absolute top-18">
+        <div className="h-screen w-full pt-10 pl-10 text-xl flex flex-col items-start gap-8 bg-orange-400 absolute top-18 z-200">
           <Link
             to="/logout"
             onClick={() => {

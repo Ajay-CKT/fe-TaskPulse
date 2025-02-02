@@ -67,12 +67,12 @@ const Task = ({ task }) => {
           <div className="flex flex-row gap-2 font-display-3 pt-4">
             <button
               onClick={() => handleComplete(task._id)}
-              className="px-2 py-1 w-20 text-sm rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-md ml-auto cursor-pointer"
+              className="px-2 py-1 w-20 text-sm font-display-4 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-md ml-auto cursor-pointer"
             >
               complete
             </button>
             <Link to={`/tasks/update-task/${task._id}`}>
-              <button className="px-2 py-1 w-18 text-center rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md">
+              <button className="px-2 py-1 w-18 text-center text-sm font-display-4 rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md">
                 Edit
               </button>
             </Link>
@@ -84,9 +84,12 @@ const Task = ({ task }) => {
           onClick={() => handleDeleteTask(task._id)}
           onMouseOver={() => setMsg(true)}
           onMouseOut={() => setMsg(false)}
-          className="absolute w-4 text-xs right-0 top-0 bg-red-500 hover:bg-red-600 rounded-tr-md text-center flex justify-center items-center cursor-pointer "
+          className="absolute w-4 text-xs right-0 top-0 bg-red-500 hover:bg-red-600 rounded-tr-md text-center flex justify-center items-center cursor-pointer"
         >
-          X{msg && <p className="absolute top-5 pt-2 font-display-3">Delete task</p>}
+          X
+          {msg && (
+            <p className="absolute top-5 pt-2 font-display-3">Delete task</p>
+          )}
         </button>
       )}
     </div>
@@ -94,19 +97,3 @@ const Task = ({ task }) => {
 };
 
 export default Task;
-
-//
-// onClick={() => handleEditTask(task._id)}
-
-/**  const handleEditTask = async (id) => {
-    try {
-      const response = await userServices.updateTask(id);
-      if (response.status === 200) {
-        toast.success("Task updated");
-        revalidate();
-        console.log("revalidated");
-      }
-    } catch (error) {
-      toast.error(error);
-    }
-  }; */

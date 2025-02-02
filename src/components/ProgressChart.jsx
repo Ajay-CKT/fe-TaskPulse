@@ -11,29 +11,60 @@ const ProgressChart = ({ tasks }) => {
     },
     { active: 0, pending: 0, completed: 0 }
   );
-  const data = [
-    { id: 0, value: statusCounts.active, label: "Active" },
-    { id: 1, value: statusCounts.pending, label: "Pending" },
-    { id: 2, value: statusCounts.completed, label: "Completed" },
-  ];
 
   return (
-    <PieChart
-      series={[
-        {
-          data,
-          cornerRadius: 5,
-          highlightScope: { fade: "global", highlight: "item" },
-          faded: {
-            color: "gray",
-            innerRadius: 30,
-            cornerRadius: 5,
-            additionalRadius: -30,
-          },
-        },
-      ]}
-      height={300}
-    />
+    <>
+      <div className="visible md:hidden">
+        <PieChart
+          series={[
+            {
+              data: [
+                { id: 0, value: statusCounts.active },
+                { id: 1, value: statusCounts.pending },
+                { id: 2, value: statusCounts.completed },
+              ],
+              cornerRadius: 5,
+              highlightScope: { fade: "global", highlight: "item" },
+              faded: {
+                color: "gray",
+                innerRadius: 30,
+                cornerRadius: 5,
+                additionalRadius: -30,
+              },
+              arcLabel: (item) => `${item.value}%`,
+              arcLabelMinAngle: 35,
+              arcLabelRadius: "60%",
+            },
+          ]}
+          height={300}
+        />
+      </div>
+      <div className="hidden md:flex">
+        <PieChart
+          series={[
+            {
+              data: [
+                { id: 0, value: statusCounts.active, label: "Active" },
+                { id: 1, value: statusCounts.pending, label: "Pending" },
+                { id: 2, value: statusCounts.completed, label: "Completed" },
+              ],
+              cornerRadius: 5,
+              highlightScope: { fade: "global", highlight: "item" },
+              faded: {
+                color: "gray",
+                innerRadius: 30,
+                cornerRadius: 5,
+                additionalRadius: -30,
+              },
+              arcLabel: (item) => `${item.value}%`,
+              arcLabelMinAngle: 35,
+              arcLabelRadius: "60%",
+            },
+          ]}
+          height={300}
+        />
+      </div>
+    </>
   );
 };
 
