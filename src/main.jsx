@@ -57,10 +57,6 @@ const routes = [
             hydrateFallbackElement: <Spinner />,
           },
           {
-            path: "teams",
-            element: <p>teams</p>,
-          },
-          {
             path: "settings",
             element: <SettingsLayout />,
             loader: userLoader,

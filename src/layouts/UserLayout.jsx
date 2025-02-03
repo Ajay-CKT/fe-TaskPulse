@@ -5,7 +5,6 @@ const UserLayout = ({ children }) => {
   const [isDashboard, setIsDashboard] = useState(false);
   const [isTasks, setIsTasks] = useState(false);
   const [isCreateTask, setIsCreateTask] = useState(false);
-  const [isTeams, setIsTeams] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
   return (
     <div className="flex flex-col-reverse md:flex md:flex-row">
@@ -50,19 +49,6 @@ const UserLayout = ({ children }) => {
           {isCreateTask && (
             <p className="absolute text-xs bottom-[-45px] text-center font-display-4">
               Create Task
-            </p>
-          )}
-        </Link>
-        <Link
-          to="/teams"
-          onMouseOver={() => setIsTeams(true)}
-          onMouseOut={() => setIsTeams(false)}
-          className="relative"
-        >
-          <img src="/icons/teams.svg" alt="teams-icon" className="size-8" />
-          {isTeams && (
-            <p className="absolute text-xs bottom-[-25px] text-center font-display-4">
-              Teams
             </p>
           )}
         </Link>

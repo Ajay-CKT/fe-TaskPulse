@@ -13,8 +13,10 @@ const userServices = {
   viewTaskById: async (id) => {
     return await instance.get(`/user/view-task/${id}`);
   },
-  taskCompleted: async (id) => {
-    return await instance.put(`/user/complete-task/${id}`);
+  taskCompleted: async (data, id) => {
+    return await instance.put(`/user/complete-task/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   },
   createTask: async (data) => {
     return await instance.post("/user/create-task", data);
@@ -30,6 +32,9 @@ const userServices = {
   },
   resetPassword: async (data, token) => {
     return await instance.put(`/user/reset-password/${token}`, data);
+  },
+  taskShared: async (data, id) => {
+    return await instance.put(`/user/share-task/${id}`, data);
   },
 };
 export default userServices;
