@@ -18,12 +18,12 @@ const Logout = () => {
         toast.success(response.data.message);
         dispatch(clearUser());
         setTimeout(() => {
-          revalidate();
           navigate("/", { replace: true });
+          revalidate();
         }, 1000);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.message || "Logout failed");
     }
   };
 
