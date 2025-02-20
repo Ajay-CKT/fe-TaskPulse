@@ -91,7 +91,7 @@ const Task = ({ task }) => {
       </div>
       <p className="text-xs text-gray-500">
         <span className="font-display-3 font-semibold">Deadline:</span>
-        {new Date(task.deadline).toLocaleString()}
+        {new Date(task.deadline).toISOString()}
       </p>
       {(task.status === "active" || task.status === "pending") && (
         <div className="flex flex-row justify-evenly">
