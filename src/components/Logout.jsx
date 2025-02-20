@@ -19,7 +19,7 @@ const Logout = () => {
         dispatch(clearUser());
         setTimeout(() => {
           revalidate();
-          navigate("", { replace: true });
+          navigate("/", { replace: true });
         }, 1000);
       }
     } catch (error) {
