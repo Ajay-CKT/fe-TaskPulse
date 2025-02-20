@@ -18,7 +18,7 @@ const Logout = () => {
         toast.success(response.data.message);
         dispatch(clearUser());
         setTimeout(() => {
-          navigate("/", { replace: true });
+          navigate("", { replace: true });
           revalidate();
         }, 1000);
       }
