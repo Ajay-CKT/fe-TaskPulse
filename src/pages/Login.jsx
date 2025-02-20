@@ -26,7 +26,8 @@ const Login = () => {
       toast.success("Logging in...");
       try {
         const response = await authServices.login({ email, password });
-        if (response.status === 200) {
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
           toast.success("Logged in successfully");
           dispatch(setEmail(""));
           dispatch(setPassword(""));

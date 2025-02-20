@@ -15,6 +15,7 @@ const Logout = () => {
     try {
       const response = await authServices.logout();
       if (response.status === 200) {
+        localStorage.removeItem("token");
         toast.success(response.data.message);
         dispatch(clearUser());
         setTimeout(() => {
