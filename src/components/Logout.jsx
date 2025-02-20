@@ -18,8 +18,8 @@ const Logout = () => {
         toast.success(response.data.message);
         dispatch(clearUser());
         setTimeout(() => {
-          navigate("", { replace: true });
           revalidate();
+          navigate("", { replace: true });
         }, 1000);
       }
     } catch (error) {
