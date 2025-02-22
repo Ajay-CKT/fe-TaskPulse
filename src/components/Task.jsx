@@ -119,13 +119,13 @@ const Task = ({ task }) => {
         <div className="flex flex-row justify-evenly">
           <div className="flex flex-row gap-2 font-display-3 pt-4">
             <Link to={`/tasks/update-task/${task._id}`}>
-              <button className="px-4 py-2 w-[70px] sm:w-[90px] md:w-[100px] text-center text-xs sm:text-sm font-display-4 rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md">
+              <button className="px-2 py-1 w-18 text-center text-sm font-display-4 rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md">
                 Edit
               </button>
             </Link>
             <div
               onClick={() => setShareScreen(true)}
-              className="relative px-4 py-2 w-[70px] sm:w-[90px] md:w-[100px] text-center text-xs sm:text-sm font-display-4 rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md"
+              className="relative px-2 py-1 w-18 text-center text-sm font-display-4 rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md"
             >
               Share
             </div>
@@ -160,7 +160,7 @@ const Task = ({ task }) => {
               onClick={() => {
                 setIsOpen(true);
               }}
-              className="px-4 py-2 w-[80px] sm:w-[100px] md:w-[120px] text-xs sm:text-sm font-display-4 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-md cursor-pointer"
+              className="px-2 py-1 w-20 text-sm font-display-4 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-md ml-auto cursor-pointer"
             >
               Submit
             </button>
