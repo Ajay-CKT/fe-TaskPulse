@@ -123,7 +123,7 @@ const CreateTask = () => {
             name="deadline"
             id="deadline"
             placeholder="Set a deadline"
-            min={new Date().toISOString()}
+            min={new Date().toISOString().slice(0, 16)}
             value={deadline}
             onChange={(e) => dispatch(setDeadline(e.target.value))}
             className={`outline-none border rounded-lg p-3 placeholdr:font-display-4 text-xs w-full ${

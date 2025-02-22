@@ -21,12 +21,12 @@ const Tasks = () => {
   const [selectedTab, setSelectedTab] = useState("active");
 
   const filterTasks = (status) =>
-    tasks.tasks.filter(
+    tasks?.tasks?.filter(
       (task) =>
         task.status === status &&
         (priorityFilter[status] === "all" ||
           task.priority === priorityFilter[status])
-    );
+    ) || [];
 
   const activeTasks = filterTasks("active");
   const pendingTasks = filterTasks("pending");

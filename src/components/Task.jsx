@@ -67,7 +67,7 @@ const Task = ({ task }) => {
     if (file) {
       if (file.type !== "application/pdf") {
         alert("Only PDF files are allowed!");
-        e.target.value = ""; // Reset file input
+        e.target.value = "";
         setSelectedFile(null);
         return;
       }
@@ -90,9 +90,28 @@ const Task = ({ task }) => {
         </span>
       </div>
       <p className="text-xs text-gray-500">
-        <span className="font-display-3 font-semibold">Deadline:</span>
-        {new Date(task.deadline).toUTCString()}
+        <span className="font-display-3 font-semibold">Deadline: </span>
+        {new Date(task.deadline).toLocaleString()}
       </p>
+      <p className="text-xs text-gray-500">
+        <span className="font-display-3 font-semibold">Assigned by: </span>
+        {task.assignedBy}
+      </p>
+      {task.completedBy && (
+        <p className="text-xs text-gray-500">
+          <span className="font-display-3 font-semibold">Completed by: </span>
+          {task.completedBy}
+        </p>
+      )}
+      {task.pdfUrl && (
+        <a
+          href={task.pdfUrl}
+          target="_blank"
+          className="text-xs text-blue-600 hover:underline"
+        >
+          view [pdf]
+        </a>
+      )}
       {(task.status === "active" || task.status === "pending") && (
         <div className="flex flex-row justify-evenly">
           <div className="flex flex-row gap-2 font-display-3 pt-4">
@@ -112,7 +131,7 @@ const Task = ({ task }) => {
                 <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full md:max-w-md sm:max-w-sm flex flex-col justify-center items-center gap-4">
                   <input
                     type="email"
-                    placeholder="enter the email "
+                    placeholder="enter the email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="border rounded-md w-1/2 p-2 placeholder:text-xs placeholder:font-display-4 placeholder:text-center outline-none text-xs text-center"
@@ -145,14 +164,19 @@ const Task = ({ task }) => {
             {isOpen && (
               <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-400">
                 <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full md:max-w-md sm:max-w-sm space-y-10">
-                  <input
-                    type="file"
-                    name="file"
-                    id="file"
-                    accept="application/pdf"
-                    className="outline-none border rounded-lg p-2 md:text-sm placeholder:text-sm md:placeholder:text-xs"
-                    onChange={handleFileChange}
-                  />
+                  <div className="flex flex-col">
+                    <input
+                      type="file"
+                      name="file"
+                      id="file"
+                      accept="application/pdf"
+                      className="outline-none border rounded-lg p-2 md:text-sm placeholder:text-sm md:placeholder:text-xs"
+                      onChange={handleFileChange}
+                    />
+                    <p className="font-display-4 italic text-xs indent-1.5">
+                      only pdf file required *
+                    </p>
+                  </div>
                   <div className="flex flex-row items-center justify-center gap-4">
                     <button
                       onClick={() => handleComplete(task._id)}

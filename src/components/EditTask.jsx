@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { toast } from "react-toastify";
 import userServices from "../services/userServices";
+import { useEffect } from "react";
 
 const EditTask = () => {
   const { id } = useParams();
@@ -22,6 +23,24 @@ const EditTask = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { revalidate } = useRevalidator();
+
+  useEffect(() => {
+    const fetchTask = async () => {
+      try {
+        const response = await userServices.viewTaskById(id);
+        if (response.status === 200) {
+          const { title, description, priority } = response.data.task;
+          console.log(response.data.task);
+          dispatch(setTitle(title));
+          dispatch(setDescription(description));
+          dispatch(setPriority(priority));
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    };
+    fetchTask();
+  }, [id, dispatch]);
 
   const handleEditTask = async (e) => {
     e.preventDefault();
@@ -44,7 +63,7 @@ const EditTask = () => {
         setTimeout(() => {
           revalidate();
           navigate("/tasks", { replace: true });
-        }, 500);
+        }, 1000);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -58,7 +77,7 @@ const EditTask = () => {
         className="w-full flex flex-col gap-8 md:w-1/2 xl:w-[40%]"
       >
         <div className="flex flex-col gap-1">
-          <label htmlFor="name">Title</label>
+          <label htmlFor="title">Title</label>
           <input
             type="text"
             name="title"
@@ -70,7 +89,7 @@ const EditTask = () => {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="email">Description</label>
+          <label htmlFor="description">Description</label>
           <input
             type="text"
             name="description"
@@ -82,13 +101,13 @@ const EditTask = () => {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="password">Deadline</label>
+          <label htmlFor="deadline">Deadline</label>
           <input
             type="datetime-local"
             name="deadline"
             id="deadline"
             placeholder="Set a deadline"
-            min={new Date().toUTCString()}
+            min={new Date().toISOString().slice(0, 16)}
             value={deadline}
             onChange={(e) => dispatch(setDeadline(e.target.value))}
             className="outline-none border rounded-lg p-3 placeholdr:font-display-4 text-xs w-full"

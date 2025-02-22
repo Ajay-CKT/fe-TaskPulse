@@ -1,11 +1,18 @@
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserProfile } from "../redux/features/user/userProfileSlice";
+import {
+  selectUserProfile,
+  setUserProfile,
+} from "../redux/features/user/userProfileSlice";
+import { useEffect } from "react";
 
 const SettingsLayout = () => {
   const userProfile = useLoaderData();
   const dispatch = useDispatch();
-  dispatch(setUserProfile(userProfile));
+
+  useEffect(() => {
+    dispatch(setUserProfile(userProfile.user));
+  }, [dispatch, userProfile]);
 
   return (
     <div className="p-2">
