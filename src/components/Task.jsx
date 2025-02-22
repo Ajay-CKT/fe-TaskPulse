@@ -91,7 +91,7 @@ const Task = ({ task }) => {
       </div>
       <p className="text-xs text-gray-500">
         <span className="font-display-3 font-semibold">Deadline: </span>
-        {new Date(task.deadline).toUTCString()}
+        {new Date(task.deadline).toLocaleString()}
       </p>
       <p className="text-xs text-gray-500">
         <span className="font-display-3 font-semibold">Assigned by: </span>

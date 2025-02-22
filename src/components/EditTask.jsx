@@ -48,7 +48,7 @@ const EditTask = () => {
         {
           title,
           description,
-          deadline,
+          deadline: new Date(deadline).toISOString(),
           priority,
         },
         id

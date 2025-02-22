@@ -31,7 +31,7 @@ const CreateTask = () => {
         const response = await userServices.createTask({
           title,
           description,
-          deadline,
+          deadline: new Date(deadline).toISOString(),
           priority,
         });
         if (response.status === 201) {
