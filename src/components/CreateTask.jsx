@@ -37,9 +37,8 @@ const CreateTask = () => {
         });
         if (response.status === 201) {
           toast.success("Task created successfully");
-          const tasks = await userServices.viewTasks();
-          console.log(tasks);
-          console.log(tasks.data);
+          const updatedTasks = await userServices.viewTasks();
+          dispatch(setTasks(updatedTasks.data.tasks));
           dispatch(setTitle(""));
           dispatch(setDescription(""));
           dispatch(setDeadline(""));

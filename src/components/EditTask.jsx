@@ -13,6 +13,7 @@ import { Link, useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { toast } from "react-toastify";
 import userServices from "../services/userServices";
 import { useEffect } from "react";
+import { setTasks } from "../redux/features/tasks/viewTasksSlice";
 
 const EditTask = () => {
   const { id } = useParams();
@@ -55,6 +56,8 @@ const EditTask = () => {
       );
       if (response.status === 200) {
         toast.success("Task updated successfully");
+        const updatedTasks = await userServices.viewTasks();
+        dispatch(setTasks(updatedTasks.data.tasks));
         dispatch(setTitle(""));
         dispatch(setDescription(""));
         dispatch(setDeadline(""));
