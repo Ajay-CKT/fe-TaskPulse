@@ -63,7 +63,7 @@ const Register = () => {
             name="name"
             id="name"
             placeholder="Enter your name"
-            autoComplete="username"
+            autoComplete="name"
             value={name}
             onChange={(e) => dispatch(setName(e.target.value))}
             className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
@@ -92,6 +92,7 @@ const Register = () => {
             name="email"
             id="email"
             placeholder="Enter your email address"
+            autoComplete="email"
             value={email}
             onChange={(e) => dispatch(setEmail(e.target.value))}
             className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${

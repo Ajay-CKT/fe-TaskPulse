@@ -61,6 +61,7 @@ const Login = () => {
             type="email"
             name="email"
             id="email"
+            autoComplete="email"
             placeholder="Enter your email address"
             value={email}
             onChange={(e) => dispatch(setEmail(e.target.value))}
