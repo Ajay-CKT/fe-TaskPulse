@@ -5,7 +5,7 @@ const viewTasksSlice = createSlice({
   initialState: [],
   reducers: {
     setTasks(state, action) {
-      state = action.payload;
+      return action.payload;
     },
   },
 });
