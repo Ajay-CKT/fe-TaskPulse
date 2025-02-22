@@ -12,7 +12,7 @@ import {
 import { Link, useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { toast } from "react-toastify";
 import userServices from "../services/userServices";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setTasks } from "../redux/features/tasks/viewTasksSlice";
 
 const EditTask = () => {
@@ -21,6 +21,7 @@ const EditTask = () => {
   const description = useSelector(selectDescription);
   const deadline = useSelector(selectDeadline);
   const priority = useSelector(selectPriority);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { revalidate } = useRevalidator();
@@ -44,6 +45,7 @@ const EditTask = () => {
 
   const handleEditTask = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await userServices.updateTask(
         {
@@ -62,6 +64,7 @@ const EditTask = () => {
         dispatch(setDescription(""));
         dispatch(setDeadline(""));
         dispatch(setPriority(""));
+        setLoading(false);
         setTimeout(() => {
           revalidate();
           navigate("/tasks", { replace: true });
@@ -124,7 +127,7 @@ const EditTask = () => {
             onChange={(e) => dispatch(setPriority(e.target.value))}
             className="outline-none border rounded-lg p-3 font-display-4 text-xs"
           >
-            <option value="medium">Set priority level</option>
+            <option>Set priority level</option>
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
@@ -133,7 +136,11 @@ const EditTask = () => {
         <div className="flex flex-row">
           <button
             type="submit"
-            className="mx-auto font-display-3 p-2 bg-orange-400 rounded-lg"
+            className={`mx-auto font-display-3 p-2 rounded-lg ${
+              loading
+                ? "cursor-progress bg-orange-300 hover:bg-orange-300 border border-orange-400"
+                : "cursor-pointer bg-orange-400 hover:bg-orange-500"
+            }`}
           >
             Update changes
           </button>
