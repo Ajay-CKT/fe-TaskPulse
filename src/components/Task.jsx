@@ -10,6 +10,7 @@ const Task = ({ task }) => {
   const [email, setEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getPriorityImage = (priority) => {
     switch (priority) {
@@ -25,10 +26,12 @@ const Task = ({ task }) => {
   };
 
   const handleComplete = async (id) => {
+    setLoading(true);
     try {
       const response = await userServices.taskCompleted({ selectedFile }, id);
       if (response.status === 200) {
         toast.success("Task completed");
+        setLoading(false);
         revalidate();
       }
     } catch (error) {
@@ -180,7 +183,13 @@ const Task = ({ task }) => {
                   <div className="flex flex-row items-center justify-center gap-4">
                     <button
                       onClick={() => handleComplete(task._id)}
-                      className="px-2 py-1 w-20 text-sm font-display-4 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-md ml-auto cursor-pointer"
+                      className={`px-2 py-1 w-20 text-sm font-display-4 rounded-md hover:shadow-md ml-auto
+                        ${
+                          loading
+                            ? "cursor-progress bg-blue-300 hover:bg-blue-300 border border-blue-500"
+                            : "cursor-pointer bg-blue-500 hover:bg-blue-600"
+                        }
+                      `}
                     >
                       Complete
                     </button>

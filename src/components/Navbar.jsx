@@ -41,12 +41,12 @@ const Navbar = () => {
           {!user && (
             <div className="hidden md:flex md:flex-row md:items-center md:gap-4">
               <Link to="/register">
-                <button className="p-2 w-26 text-center rounded-md hover:border-b hover:border-b-orange-500 hover:cursor-pointer hover:shadow-md">
+                <button className="p-2 w-26 text-center rounded-md hover:border-b hover:border-b-orange-500 cursor-pointer hover:shadow-md">
                   Get Started
                 </button>
               </Link>
               <Link to="/login">
-                <button className="p-2 w-20 text-center bg-orange-400 rounded-md hover:bg-orange-500 hover:cursor-pointer hover:shadow-lg">
+                <button className="p-2 w-20 text-center bg-orange-400 rounded-md hover:bg-orange-500 cursor-pointer hover:shadow-lg">
                   Login
                 </button>
               </Link>
@@ -57,7 +57,7 @@ const Navbar = () => {
               <Link to="/logout">
                 <button
                   onClick={() => navigate("/logout", { replace: true })}
-                  className="p-2 w-26 text-center rounded-md bg-orange-400 hover:bg-orange-500 hover:cursor-pointer hover:shadow-md"
+                  className="p-2 w-26 text-center rounded-md bg-orange-400 hover:bg-orange-500 cursor-pointer hover:shadow-md"
                 >
                   Logout
                 </button>
@@ -69,9 +69,6 @@ const Navbar = () => {
               <img src="/icons/menu.png" alt="" className="size-full" />
             </button>
           </div>
-          {/* <button className="p-2 size-10 rounded-lg hover:cursor-pointer">
-            <img src="/icons/menu.png" alt="" className="size-full" />
-          </button> */}
         </div>
       </nav>
       {showMenu && !user && (
