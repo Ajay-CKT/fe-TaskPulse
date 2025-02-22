@@ -52,6 +52,7 @@ const CreateTask = () => {
         }
       } catch (error) {
         toast.error(error.response.data.message);
+        setLoading(false);
       }
     } else {
       setReqMsg(true);

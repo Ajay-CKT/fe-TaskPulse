@@ -15,13 +15,14 @@ const Login = () => {
   const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
   const [reqMsg, setReqMsg] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { revalidate } = useRevalidator();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (email && password) {
       toast.success("Logging in...");
       try {
@@ -31,13 +32,15 @@ const Login = () => {
           toast.success("Logged in successfully");
           dispatch(setEmail(""));
           dispatch(setPassword(""));
+          setLoading(false);
           setTimeout(() => {
             revalidate();
             navigate("/dashboard", { replace: true });
-          }, 1000);
+          }, 500);
         }
       } catch (error) {
         toast.error(error.response.data.message);
+        setLoading(false);
       }
     } else {
       setReqMsg(true);
@@ -108,7 +111,11 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="font-display-3 text-sm p-2 mx-auto bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500"
+          className={`mx-auto font-display-3 p-2 rounded-lg ${
+            loading
+              ? "cursor-progress bg-orange-300 hover:bg-orange-300 border border-orange-400"
+              : "cursor-pointer bg-orange-400 hover:bg-orange-500"
+          }`}
         >
           Continue
         </button>

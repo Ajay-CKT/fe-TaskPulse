@@ -17,12 +17,14 @@ const Register = () => {
   const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
   const [reqMsg, setReqMsg] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (name && email && password) {
       toast.success("Registering...");
       try {
@@ -32,13 +34,14 @@ const Register = () => {
           dispatch(setName(""));
           dispatch(setEmail(""));
           dispatch(setPassword(""));
-
+          setLoading(false);
           setTimeout(() => {
             navigate("/login", { replace: true });
           }, 500);
         }
       } catch (error) {
         toast.error(error.response.data.message);
+        setLoading(false);
       }
     } else {
       setReqMsg(true);
@@ -137,7 +140,11 @@ const Register = () => {
         </div>
         <button
           type="submit"
-          className="font-display-3 text-sm p-2 mx-auto bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500"
+          className={`mx-auto font-display-3 p-2 rounded-lg ${
+            loading
+              ? "cursor-progress bg-orange-300 hover:bg-orange-300 border border-orange-400"
+              : "cursor-pointer bg-orange-400 hover:bg-orange-500"
+          }`}
         >
           Get started
         </button>
