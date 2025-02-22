@@ -179,7 +179,7 @@ const CreateTask = () => {
         </div>
         <button
           type="submit"
-          className="mx-auto font-display-3 p-2 bg-orange-400 rounded-lg"
+          className="mx-auto font-display-3 p-2 bg-orange-400 rounded-lg cursor-pointer hover:bg-orange-500"
         >
           Create Task
         </button>
