@@ -116,7 +116,7 @@ const Task = ({ task }) => {
         </a>
       )}
       {(task.status === "active" || task.status === "pending") && (
-        <div className="flex flex-row justify-evenly">
+        <div className="flex flex-row flex-wrap justify-evenly">
           <div className="flex flex-row gap-2 font-display-3 pt-4">
             <Link to={`/tasks/update-task/${task._id}`}>
               <button className="px-2 py-1 w-18 text-center text-sm font-display-4 rounded-md border-b border-b-orange-500 cursor-pointer hover:shadow-md">
