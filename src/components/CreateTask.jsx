@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import userServices from "../services/userServices";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { setTasks } from "../redux/features/tasks/viewTasksSlice";
 
 const CreateTask = () => {
   const title = useSelector(selectTitle);
@@ -36,6 +37,9 @@ const CreateTask = () => {
         });
         if (response.status === 201) {
           toast.success("Task created successfully");
+          const tasks = await userServices.viewTasks();
+          console.log(tasks);
+          console.log(tasks.data);
           dispatch(setTitle(""));
           dispatch(setDescription(""));
           dispatch(setDeadline(""));
