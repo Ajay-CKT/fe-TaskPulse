@@ -30,7 +30,6 @@ const EditTask = () => {
         const response = await userServices.viewTaskById(id);
         if (response.status === 200) {
           const { title, description, priority } = response.data.task;
-          console.log(response.data.task);
           dispatch(setTitle(title));
           dispatch(setDescription(description));
           dispatch(setPriority(priority));
