@@ -119,6 +119,7 @@ const Register = () => {
             name="password"
             id="password"
             placeholder="Enter a secure password"
+            autoComplete="new-password"
             value={password}
             onChange={(e) => dispatch(setPassword(e.target.value))}
             className={`outline-none border rounded-lg p-2 placeholder:font-display-4 md:text-sm placeholder:text-sm md:placeholder:text-xs ${
