@@ -182,9 +182,10 @@ const CreateTask = () => {
         </div>
         <button
           type="submit"
-          className={`mx-auto font-display-3 p-2 bg-orange-400 rounded-lg cursor-pointer hover:bg-orange-500 ${
-            loading &&
-            "cursor-progress bg-orange-300 hover:bg-orange-300 border border-orange-400"
+          className={`mx-auto font-display-3 p-2 rounded-lg ${
+            loading
+              ? "cursor-progress bg-orange-300 hover:bg-orange-300 border border-orange-400"
+              : "cursor-pointer bg-orange-400 hover:bg-orange-500"
           }`}
         >
           Create Task
