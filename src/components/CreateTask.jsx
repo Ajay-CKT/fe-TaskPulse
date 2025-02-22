@@ -21,12 +21,14 @@ const CreateTask = () => {
   const deadline = useSelector(selectDeadline);
   const priority = useSelector(selectPriority);
   const [reqMsg, setReqMsg] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCreateTask = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (title && description && deadline && priority) {
       try {
         const response = await userServices.createTask({
@@ -43,6 +45,7 @@ const CreateTask = () => {
           dispatch(setDescription(""));
           dispatch(setDeadline(""));
           dispatch(setPriority(""));
+          setLoading(false);
           setTimeout(() => {
             navigate("/tasks", { replace: true });
           }, 500);
@@ -159,7 +162,7 @@ const CreateTask = () => {
               reqMsg && "border-red-500"
             }`}
           >
-            <option value="medium">Set priority level</option>
+            <option>Set priority level</option>
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
@@ -179,7 +182,10 @@ const CreateTask = () => {
         </div>
         <button
           type="submit"
-          className="mx-auto font-display-3 p-2 bg-orange-400 rounded-lg cursor-pointer hover:bg-orange-500"
+          className={`mx-auto font-display-3 p-2 bg-orange-400 rounded-lg cursor-pointer hover:bg-orange-500 ${
+            loading &&
+            "cursor-progress bg-orange-300 hover:bg-orange-300 border border-orange-400"
+          }`}
         >
           Create Task
         </button>
