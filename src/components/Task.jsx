@@ -35,9 +35,9 @@ const Task = ({ task }) => {
       if (response.status === 200) {
         toast.success("Task completed");
         setLoading(false);
-        // revalidate();
         const tasks = await userServices.viewTasks();
         dispatch(setTasks(tasks.data.tasks));
+        revalidate();
       }
     } catch (error) {
       toast.error(error);
@@ -50,9 +50,9 @@ const Task = ({ task }) => {
       if (response.status === 200) {
         setShareScreen(false);
         toast.success("Task Shared");
-        // revalidate();
         const tasks = await userServices.viewTasks();
         dispatch(setTasks(tasks.data.tasks));
+        revalidate();
       }
     } catch (error) {
       toast.error(error);
@@ -64,9 +64,9 @@ const Task = ({ task }) => {
       const response = await userServices.deleteTask(id);
       if (response.status === 200) {
         toast.success("Task deleted");
-        // revalidate();
         const tasks = await userServices.viewTasks();
         dispatch(setTasks(tasks.data.tasks));
+        revalidate();
       }
     } catch (error) {
       toast.error(error.response.data.message);

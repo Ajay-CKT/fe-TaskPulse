@@ -23,21 +23,19 @@ const Tasks = () => {
 
   useEffect(() => {
     dispatch(setTasks(tasks));
-  }, [dispatch, tasks]);
-
-  useEffect(() => {
-    socket.on("tasksUpdated", async () => {
+    const handlePendingTasksUpdates = async () => {
       try {
         const tasks = await userServices.viewTasks();
         dispatch(setTasks(tasks.data.tasks));
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching updated pending tasks", error);
       }
-    });
-    return () => {
-      socket.off("tasksUpdated");
     };
-  }, [dispatch]);
+    socket.on("tasksUpdated", handlePendingTasksUpdates);
+    return () => {
+      socket.off("tasksUpdated", handlePendingTasksUpdates);
+    };
+  }, [dispatch, tasks]);
 
   const [priorityFilter, setPriorityFilter] = useState({
     active: "all",
