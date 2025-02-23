@@ -7,7 +7,15 @@ import userServices from "../services/userServices";
 import { io } from "socket.io-client";
 import BACKEND_URL from "../utils/config";
 
-const socket = io(BACKEND_URL);
+const socket = io(
+  BACKEND_URL,
+  { autoConnect: false },
+  { transports: ["websocket"] },
+  { upgrade: false },
+  { rejectUnauthorized: false },
+  { secure: true },
+  { path: "/socket.io" }
+);
 
 const Tasks = () => {
   const tasks = useLoaderData();
