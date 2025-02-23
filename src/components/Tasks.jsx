@@ -3,6 +3,11 @@ import { setTasks } from "../redux/features/tasks/viewTasksSlice";
 import { Outlet, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Task from "./Task";
+import userServices from "../services/userServices";
+import { io } from "socket.io-client";
+import { BACKEND_URL_WS } from "../utils/config";
+
+const socket = io(BACKEND_URL_WS);
 
 const Tasks = () => {
   const tasks = useLoaderData();
@@ -11,6 +16,20 @@ const Tasks = () => {
   useEffect(() => {
     dispatch(setTasks(tasks));
   }, [dispatch, tasks]);
+
+  useEffect(() => {
+    socket.on("tasksUpdated", async () => {
+      try {
+        const tasks = await userServices.viewTasks();
+        dispatch(setTasks(tasks.data.tasks));
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    return () => {
+      socket.off("tasksUpdated");
+    };
+  }, [dispatch]);
 
   const [priorityFilter, setPriorityFilter] = useState({
     active: "all",
