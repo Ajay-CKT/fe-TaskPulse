@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import userServices from "../services/userServices";
 import { toast } from "react-toastify";
 import { Link, useRevalidator } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTasks } from "../redux/features/tasks/viewTasksSlice";
 
 const Task = ({ task }) => {
   const { revalidate } = useRevalidator();
@@ -11,6 +13,7 @@ const Task = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const getPriorityImage = (priority) => {
     switch (priority) {
@@ -32,7 +35,9 @@ const Task = ({ task }) => {
       if (response.status === 200) {
         toast.success("Task completed");
         setLoading(false);
-        revalidate();
+        // revalidate();
+        const tasks = await userServices.viewTasks();
+        dispatch(setTasks(tasks.data.tasks));
       }
     } catch (error) {
       toast.error(error);
@@ -45,7 +50,9 @@ const Task = ({ task }) => {
       if (response.status === 200) {
         setShareScreen(false);
         toast.success("Task Shared");
-        revalidate();
+        // revalidate();
+        const tasks = await userServices.viewTasks();
+        dispatch(setTasks(tasks.data.tasks));
       }
     } catch (error) {
       toast.error(error);
@@ -57,7 +64,9 @@ const Task = ({ task }) => {
       const response = await userServices.deleteTask(id);
       if (response.status === 200) {
         toast.success("Task deleted");
-        revalidate();
+        // revalidate();
+        const tasks = await userServices.viewTasks();
+        dispatch(setTasks(tasks.data.tasks));
       }
     } catch (error) {
       toast.error(error.response.data.message);
