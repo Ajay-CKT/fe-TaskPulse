@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import Task from "./Task";
 import userServices from "../services/userServices";
 import { io } from "socket.io-client";
-import { BACKEND_URL_WS } from "../utils/config";
+import BACKEND_URL from "../utils/config";
 
-const socket = io(BACKEND_URL_WS);
+const socket = io(BACKEND_URL);
 
 const Tasks = () => {
   const tasks = useLoaderData();
