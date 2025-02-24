@@ -27,7 +27,7 @@ const Login = () => {
       toast.success("Logging in...");
       try {
         const response = await authServices.login({ email, password });
-        if (response.data.token) {
+        if (response?.data?.token) {
           localStorage.setItem("token", response.data.token);
           toast.success("Logged in successfully");
           dispatch(setEmail(""));
@@ -39,11 +39,12 @@ const Login = () => {
           }, 500);
         }
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message || "Invalid credentials");
         setLoading(false);
       }
     } else {
       setReqMsg(true);
+      setLoading(false);
     }
   };
   return (

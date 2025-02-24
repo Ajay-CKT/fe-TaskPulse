@@ -29,7 +29,7 @@ const Register = () => {
       toast.success("Registering...");
       try {
         const response = await authServices.register({ name, email, password });
-        if (response.status === 201) {
+        if (response?.status === 201) {
           toast.success("Registered successfully");
           dispatch(setName(""));
           dispatch(setEmail(""));
@@ -40,11 +40,15 @@ const Register = () => {
           }, 500);
         }
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(
+          error?.response?.data?.message ||
+            "Something went wrong. Please try again."
+        );
         setLoading(false);
       }
     } else {
       setReqMsg(true);
+      setLoading(false);
     }
   };
   return (
